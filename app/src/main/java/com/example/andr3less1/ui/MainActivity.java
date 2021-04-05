@@ -6,22 +6,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.location.GnssAntennaInfo;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.andr3less1.R;
 import com.example.andr3less1.adapters.EmojiCardAdapter;
+import com.example.andr3less1.domain.Card;
 
 public class MainActivity extends AppCompatActivity implements EmojiCardAdapter.Listener {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager  layoutManager;
     private EmojiCardAdapter emojiCardAdapter;
+    private EmogiGame emogiGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        emojiCardAdapter = new EmojiCardAdapter(this);
+        emogiGame = new EmogiGame();
+        emojiCardAdapter = new EmojiCardAdapter(this,emogiGame);
         init();
         recyclerView.setAdapter(emojiCardAdapter);
     }
@@ -33,7 +36,11 @@ public class MainActivity extends AppCompatActivity implements EmojiCardAdapter.
     }
 
     @Override
-    public void choose() {
+    public void choose(Card<String> card) {
+        emogiGame.choose(card);
+        if (emogiGame.getCards().size() ==0){
+            Toast.makeText(this, "Вы удалили все данные", Toast.LENGTH_SHORT).show();
+        }
         emojiCardAdapter.notifyDataSetChanged();
     }
 }

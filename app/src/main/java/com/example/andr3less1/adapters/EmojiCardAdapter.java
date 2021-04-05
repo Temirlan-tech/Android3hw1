@@ -17,12 +17,13 @@ import com.example.andr3less1.ui.EmogiGame;
 public class EmojiCardAdapter extends RecyclerView.Adapter<EmojiCardAdapter.EmojiHolder> {
 
     private final Listener listener;
+    private  EmogiGame emogiGame;
 
-    public EmojiCardAdapter(Listener listener){
+    public EmojiCardAdapter(Listener listener,EmogiGame game){
         this.listener = listener;
+        emogiGame = game;
     }
 
-    private final EmogiGame emogiGame = new EmogiGame();
 
     @NonNull
     @Override
@@ -57,13 +58,12 @@ public class EmojiCardAdapter extends RecyclerView.Adapter<EmojiCardAdapter.Emoj
                 tvCard.setBackgroundColor(Color.BLUE);
             }
             tvCard.setOnClickListener(v -> {
-                emogiGame.choose(card);
-                listener.choose();
+                listener.choose(card);
             });
         }
     }
 
     public interface Listener {
-        void choose();
+        void choose(Card<String> card);
     }
 }

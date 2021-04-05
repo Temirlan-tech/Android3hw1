@@ -32,15 +32,19 @@ public class Game<Content> {
     // метод который ищет открывшей карте пару
     private void checkPairs(Card<Content> card) {
         for (Card<Content> secondCard : cards){
-            if (card.isFaceUp() && secondCard.isFaceUp()){
-                if (card.equals(secondCard) && card.getId() != secondCard.getId()){
-                    card.setMatch(true);
-                    secondCard.setMatch(true);
+            if (secondCard.isFaceUp()){
+                if (card.getContent() == secondCard.getContent()
+                        && card.getId() != secondCard.getId()){
+                    cards.remove(card);
+                    cards.remove(secondCard);
                     Log.d("TAG", "match" );
+                    return;
+                } else {
+                    card.setFaceUp(!card.isFaceUp());
+                    secondCard.setFaceUp(!secondCard.isFaceUp());
                 }
             }
         }
-        remove();
     }
 
     private void remove() { // удаляем по новому списку
